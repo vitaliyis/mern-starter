@@ -27,5 +27,13 @@ export default {
     	  =1 {has # comment}
     	  other {has # comments}
     	} as of {date}`,
+    addComment: 'Add Comment',
+    hideFormComment: 'Hide Form Comment',
+    btnAddInFormComment: 'Add',
+    btnEditInFormComment: 'Edit',
+    btnEditInComment: 'edit',
+    btnDeleteInComment: 'delete',
+    placeholderAuthorFormComment: 'author',
+    placeholderCommentFormComment: 'comment',
   },
 };

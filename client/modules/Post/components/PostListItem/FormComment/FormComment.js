@@ -1,25 +1,27 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { injectIntl, intlShape } from 'react-intl';
 
 // Import Style
 import styles from './FormComment.css';
-import PropTypes from 'prop-types';
 
 const FormComment = props => {
   const { comment, nameButton, onChange, onHandleComment } = props;
-
   return (
-    <form className={styles['form-content form-comment']}>
+    <form className={styles['form-comment']}>
       <input
+        className={styles['form-field']}
         type="text"
         name="author"
-        placeholder="author"
+        placeholder={props.intl.messages.placeholderAuthorFormComment}
         value={comment.author}
         onChange={onChange}
       />
       <input
+        className={styles['form-field']}
         type="text"
         name="text"
-        placeholder="comment"
+        placeholder={props.intl.messages.placeholderCommentFormComment}
         value={comment.text}
         onChange={onChange}
       />
@@ -33,10 +35,11 @@ const FormComment = props => {
 };
 
 FormComment.propTypes = {
-  comment: PropTypes.string.isRequired,
-  nameButton: PropTypes.string.isRequired,
+  comment: PropTypes.object.isRequired,
+  nameButton: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,
   onHandleComment: PropTypes.func.isRequired,
+  intl: intlShape.isRequired,
 };
 
-export default FormComment;
+export default injectIntl(FormComment);

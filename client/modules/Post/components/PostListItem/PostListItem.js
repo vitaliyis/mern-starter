@@ -114,7 +114,7 @@ class PostListItem extends React.Component {
 
         {isOpenedForm && isAddComment ?
           <FormComment
-            nameButton="Add"
+            nameButton={<FormattedMessage id="btnAddInFormComment" />}
             comment={comment}
             onChange={this.onChange}
             onHandleComment={this.onAddComment}
@@ -122,7 +122,7 @@ class PostListItem extends React.Component {
         }
         {isOpenedForm && isEditComment ?
           <FormComment
-            nameButton="Edit"
+            nameButton={<FormattedMessage id="btnEditInFormComment" />}
             comment={comment}
             onChange={this.onChange}
             onHandleComment={this.onEditComment}
@@ -131,7 +131,7 @@ class PostListItem extends React.Component {
 
         <p className={styles['post-action']}>
           <a href="#" onClick={props.onDelete}><FormattedMessage id="deletePost" /></a>
-          <a href="#" onClick={this.onOpenForm}>Add Comment</a>
+          <a href="#" onClick={this.onOpenForm}>{isOpenedForm ? <FormattedMessage id="hideFormComment" /> : <FormattedMessage id="addComment" />}</a>
         </p>
         <hr className={styles.divider} />
       </div>

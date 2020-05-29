@@ -1,8 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 
 // Import Style
 import styles from './PostItemComments.css';
-import PropTypes from 'prop-types';
 
 const PostItemComments = props => {
   const { comments, onEdit, onDelete } = props;
@@ -13,8 +14,8 @@ const PostItemComments = props => {
         return (<p key={c.id} className={styles['post-desc']}>
           <span className={styles['comment-author']}>{c.author}: </span>
           <span>{c.text}</span>
-          <button className={styles['btn-comment']} onClick={() => onEdit(c.id)}>edit</button>
-          <button className={styles['btn-comment']} onClick={() => onDelete(c.id)}>delete</button>
+          <button className={styles['btn-comment']} onClick={() => onEdit(c.id)}>{<FormattedMessage id="btnEditInComment" />}</button>
+          <button className={styles['btn-comment']} onClick={() => onDelete(c.id)}>{<FormattedMessage id="btnDeleteInComment" />}</button>
         </p>);
       }) : null}
     </div>

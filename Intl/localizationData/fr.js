@@ -27,5 +27,13 @@ export default {
   		  =1 {has # comment}
   		  other {has # comments}
   		} as of {date} (in real app this would be translated to French)`,
+    addComment: 'Ajouter un commentaire',
+    hideFormComment: 'Masquer le formulaire de commentaire',
+    btnAddInFormComment: 'Ajouter',
+    btnEditInFormComment: 'Éditer',
+    btnEditInComment: 'édite',
+    btnDeleteInComment: 'retirer',
+    placeholderAuthorFormComment: 'auteur',
+    placeholderCommentFormComment: 'commentaire',
   },
 };
