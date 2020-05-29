@@ -5,92 +5,95 @@ import { FormattedMessage } from 'react-intl';
 
 // Import Style
 import styles from './PostListItem.css';
+import PostItemComments from './PostItemComments/PostItemComments';
+import FormComment from './FormComment/FormComment';
 
 class PostListItem extends React.Component {
 
   state = {
-    isOpened: false,
+    isOpenedForm: false,
     isEditComment: false,
+    isAddComment: true,
     comment: {
       id: '',
       author: '',
-      text: ''
+      text: '',
     },
-    comments: []
+    comments: [],
   }
 
   onChange = event => {
-    const name = event.target.name
-    const value = event.target.value
+    const name = event.target.name;
+    const value = event.target.value;
     this.setState(state => ({
-      comment: {...state.comment, [name] : value}
-      })
-    )
+      comment: { ...state.comment, [name]: value },
+    }));
   }
 
-  onClick = event => {
-    event.preventDefault()
+  onOpenForm = event => {
+    event.preventDefault();
     this.setState(state => ({
-       isOpened: !state.isOpened
-      }))
+      isOpenedForm: !state.isOpenedForm,
+    }));
   }
 
-  onAddComment = () => {
-    event.preventDefault()
+  onAddComment = event => {
+    event.preventDefault();
 
-    // Edit comment
-    if (this.state.isEditComment) {
-      const comments = this.state.comments.map(c => {
-        if (c.id === this.state.comment.id) {
-          c = {...this.state.comment}
-        }
-        return c
-      })
-      this.setState({
-        comments,
-        comment: {author: '', text: '', id: ''},
-        isOpened: false,
-        isEditComment: false
-      })
+    // Add comment
+    this.setState(state => ({
+      comments: [...state.comments,
+        {
+          id: Math.random(),
+          author: state.comment.author,
+          text: state.comment.text,
+        }],
+      comment: { author: '', text: '', id: '' },
+      isOpenedForm: false,
+    }));
+  }
 
-    } else {
-      // Add comment
-      this.setState(state => ({
-        // comments: [...state.comments, state.comment],
-        comments: [...state.comments,
-          {
-            id: Math.random(),
-            author: state.comment.author,
-            text: state.comment.text
-          }],
-        comment: {author: '', text: '', id: ''},
-        isOpened: false
-      }))
-    }
+  onEditComment = event => {
+    event.preventDefault();
+
+    const comments = this.state.comments.map(c => {
+      if (c.id === this.state.comment.id) {
+        const newComment = { ...this.state.comment };
+        return newComment;
+      }
+      return c;
+    });
+    this.setState({
+      comments,
+      comment: { author: '', text: '', id: '' },
+      isOpenedForm: false,
+      isEditComment: false,
+      isAddComment: true,
+    });
   }
 
   onEdit = id => {
-    event.preventDefault()
-    const comment = this.state.comments.find(c => c.id === id)
-    console.log('comment => ', comment)
+    event.preventDefault();
+    const comment = this.state.comments.find(c => c.id === id);
     this.setState({
       comment,
-      isOpened: true,
-      isEditComment: true
-    })
+      isOpenedForm: true,
+      isEditComment: true,
+      isAddComment: false,
+    });
   }
 
   onDelete = id => {
-    event.preventDefault()
-    const comments = this.state.comments.filter(c => c.id !== id)
+    event.preventDefault();
+    const comments = this.state.comments.filter(c => c.id !== id);
     this.setState({
-      comments
-    })
+      comments,
+    });
   }
 
   render() {
-    const {props} = this
-    const {isOpened, comment, comments} = this.state
+    const { props } = this;
+    const { isOpenedForm, comment, comments, isEditComment, isAddComment } = this.state;
 
     return (
       <div className={styles['single-post']}>
@@ -102,45 +105,33 @@ class PostListItem extends React.Component {
         <p className={styles['author-name']}><FormattedMessage id="by" /> {props.post.name}</p>
         <p className={styles['post-desc']}>{props.post.content}</p>
 
-        <div className={styles['list-comment']}>
-        {comments ? comments.map(c => {
-          return  <p key={c.id} className={styles['post-desc']}>
-                    <span className={styles['comment-author']}>{c.author}: </span>
-                    <span>{c.text}</span>
-                    <a href="#" onClick={() => this.onEdit(c.id)}>edit</a>
-                    <a href="#" onClick={() => this.onDelete(c.id)}>delete</a>
-                  </p>
-        }) : null}
-        </div>
 
-        {isOpened ?
-          <form className={styles['form-content form-comment']}>
-            <input
-              type="text"
-              name="author"
-              placeholder="author"
-              value={comment.author}
-              onChange={this.onChange}
-            />
-            <input
-            type="text"
-            name="text"
-            placeholder="comment"
-            value={comment.text}
+        <PostItemComments
+          comments={comments}
+          onEdit={this.onEdit}
+          onDelete={this.onDelete}
+        />
+
+        {isOpenedForm && isAddComment ?
+          <FormComment
+            nameButton="Add"
+            comment={comment}
             onChange={this.onChange}
-            />
-            <button
-              type="button"
-              disabled={!Boolean(comment.author && comment.text)}
-              onClick={this.onAddComment}
-            >add</button>
-          </form>
-              : null
-          }
+            onHandleComment={this.onAddComment}
+          /> : null
+        }
+        {isOpenedForm && isEditComment ?
+          <FormComment
+            nameButton="Edit"
+            comment={comment}
+            onChange={this.onChange}
+            onHandleComment={this.onEditComment}
+          /> : null
+        }
 
         <p className={styles['post-action']}>
           <a href="#" onClick={props.onDelete}><FormattedMessage id="deletePost" /></a>
-          <a href="#" onClick={this.onClick}>Add Comment</a>
+          <a href="#" onClick={this.onOpenForm}>Add Comment</a>
         </p>
         <hr className={styles.divider} />
       </div>

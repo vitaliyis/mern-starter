@@ -1,0 +1,27 @@
+.list-comment{
+  text-align: right;
+}
+
+.list-comment p{
+  margin-bottom: 8px;
+}
+
+.list-comment .btn-comment{
+  margin-left: 10px;
+  color: #616161;
+  border: none;
+  background-color: white;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.comment-author{
+  font-style: italic;
+  color: #000;
+}
+
+.post-desc{
+  font-size: 14px;
+  color: #888;
+  margin-bottom: 8px;
+}

@@ -71,20 +71,3 @@
   margin-left: 10px;
 }
 
-.list-comment{
-  text-align: right;
-}
-
-.list-comment p{
-  margin-bottom: 8px;
-}
-
-.list-comment a{
-  margin-left: 10px;
-  color: #616161;
-}
-
-.comment-author{
-  font-style: italic;
-  color: #000;
-}

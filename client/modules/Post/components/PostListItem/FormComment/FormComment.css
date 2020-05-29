@@ -1,0 +1,12 @@
+.btn-form-comment{
+  color: white;
+  padding: 2px 10px 2px 10px;
+  background: #03A9F4;
+  border: none;
+  border-radius: 1000px;
+  cursor: pointer;
+}
+
+.btn-form-comment:disabled{
+  opacity: .5;
+}
